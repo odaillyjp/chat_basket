@@ -1,3 +1,3 @@
 class User < ApplicationRecord
-  validates :name, precense: true
+  validates :name, presence: true
 end
