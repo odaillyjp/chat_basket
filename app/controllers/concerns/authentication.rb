@@ -19,8 +19,8 @@ module Authentication
   end
 
   def create_user(user_name)
-    User.create(name: user_name)
-    cookies.signed[:user_id] ||= user_id
+    user = User.create(name: user_name)
+    cookies.signed[:user_id] ||= user.id
     @current_user = user
   end
 end
