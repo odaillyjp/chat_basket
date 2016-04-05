@@ -4,4 +4,9 @@
 .rooms
   %h1 卓一覧
   - @rooms.each do |room|
-    = link_to room.name, room
+    .rooms__room
+      = link_to room.name, room
+      .rooms__room-members
+        %h2 参加者
+        - room.members.each do |member|
+          %p= member.name

@@ -23,4 +23,8 @@ module Authentication
     cookies.signed[:user_id] ||= user.id
     @current_user = user
   end
+
+  def current_user
+    @current_user
+  end
 end

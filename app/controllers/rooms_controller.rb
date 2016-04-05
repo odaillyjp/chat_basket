@@ -6,11 +6,12 @@ class RoomsController < ApplicationController
   end
 
   def show
+    @room.attendances.create(user: current_user) unless @room.member?(current_user)
   end
 
   private
 
   def set_room
-    @room = Room.includes(messages: :user).find(params[:id])
+    @room = Room.includes(:members, messages: :user).find(params[:id])
   end
 end

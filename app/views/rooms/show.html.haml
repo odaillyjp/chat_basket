@@ -4,6 +4,14 @@
 .room{ data: { 'room-id': @room.id } }
   %h1= @room.name
 
-  = render 'messages/messages', room: @room
-  = render 'messages/new', room: @room
-  = render 'games/new', room: @room
+  .room__members
+    %h2 参加者
+    - @room.members.each do |member|
+      %p= member.name
+
+  .room__messages
+    %h2 チャット
+
+    = render 'messages/messages', room: @room
+    = render 'messages/new', room: @room
+    = render 'games/new', room: @room
