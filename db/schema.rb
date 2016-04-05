@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160405220952) do
+ActiveRecord::Schema.define(version: 20160405222854) do
 
   create_table "games", force: :cascade do |t|
     t.integer  "room_id",    null: false
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(version: 20160405220952) do
 
   add_index "messages", ["room_id"], name: "index_messages_on_room_id"
   add_index "messages", ["user_id"], name: "index_messages_on_user_id"
+
+  create_table "players", force: :cascade do |t|
+    t.integer  "user_id",                 null: false
+    t.integer  "game_id",                 null: false
+    t.string   "hand",       default: "", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "players", ["game_id"], name: "index_players_on_game_id"
+  add_index "players", ["user_id"], name: "index_players_on_user_id"
 
   create_table "rooms", force: :cascade do |t|
     t.string   "name",       null: false
