@@ -4,4 +4,8 @@ class Game < ApplicationRecord
 
   validates :room_id, presence: true
   validates :stock, presence: true
+
+  def setup!(*args)
+    # TODO
+  end
 end
