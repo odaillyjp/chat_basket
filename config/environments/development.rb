@@ -63,4 +63,7 @@ Rails.application.configure do
   config.generators.assets = false
   config.generators.helper = false
   config.generators.test_framework = nil
+
+  # Set Action Cable server url for consumer connection
+  config.action_cable.url = 'ws://localhost:28080'
 end

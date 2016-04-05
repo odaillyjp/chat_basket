@@ -1,2 +1,7 @@
-%h1 Rooms#index
-%p Find me in app/views/rooms/index.html.haml
+.header
+  %p= @current_user.name
+
+.rooms
+  %h1 卓一覧
+  - @rooms.each do |room|
+    = link_to room.name, room

@@ -1,0 +1,8 @@
+.header
+  %p= @current_user.name
+
+.room{ data: { 'room-id': @room.id } }
+  %h1= @room.name
+
+  = render 'messages/messages', room: @room
+  = render 'messages/new', room: @room

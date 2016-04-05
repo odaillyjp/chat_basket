@@ -1,0 +1,3 @@
+= form_for [@room, Message.new], remote: true do |f|
+  = f.text_area :content, size: '100x1', class: 'new-message-form__content'
+  = f.submit '送信', class: 'new-message-form__submit'
