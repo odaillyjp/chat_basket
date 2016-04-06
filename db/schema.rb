@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160405231955) do
 
   create_table "games", force: :cascade do |t|
     t.integer  "room_id",    null: false
-    t.string   "stock",      null: false
+    t.string   "stock"
     t.integer  "winner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
