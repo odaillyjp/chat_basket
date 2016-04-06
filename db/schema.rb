@@ -57,11 +57,11 @@ ActiveRecord::Schema.define(version: 20160405231955) do
   add_index "messages", ["user_id"], name: "index_messages_on_user_id"
 
   create_table "players", force: :cascade do |t|
-    t.integer  "user_id",                 null: false
-    t.integer  "game_id",                 null: false
-    t.string   "hand",       default: "", null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "user_id",    null: false
+    t.integer  "game_id",    null: false
+    t.string   "hand"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "players", ["game_id"], name: "index_players_on_game_id"

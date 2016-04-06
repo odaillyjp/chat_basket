@@ -4,5 +4,4 @@ class Player < ApplicationRecord
 
   validates :user, presence: true
   validates :game, presence: true
-  validates :hand, presence: true
 end
