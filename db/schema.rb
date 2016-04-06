@@ -37,7 +37,8 @@ ActiveRecord::Schema.define(version: 20160405231955) do
   create_table "layouts", force: :cascade do |t|
     t.integer  "game_id",    null: false
     t.string   "char",       null: false
-    t.integer  "orner_id",   null: false
+    t.string   "word"
+    t.integer  "orner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
