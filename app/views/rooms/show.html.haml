@@ -14,4 +14,6 @@
 
     = render 'messages/messages', room: @room
     = render 'messages/new', room: @room
-    = render 'games/new', room: @room
+
+    %div{ class: hiding_bem_class("room__new-game", !@room.waiting?) }
+      = render 'games/new', room: @room

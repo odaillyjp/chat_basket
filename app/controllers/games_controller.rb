@@ -3,8 +3,7 @@ class GamesController < ApplicationController
 
   # NOTE: AJAX のみを想定
   def create
-    @game = @room.games.build
-    @game.setup!(@room.members)
+    @room.create_game!
 
     render json: @game
   end

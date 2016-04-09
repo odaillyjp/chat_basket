@@ -3,6 +3,7 @@ class MessageRelayJob < ApplicationJob
 
   def perform(message)
     ActionCable.server.broadcast "rooms:#{message.room_id}:messages",
+      command: 'appendMessage',
       body: MessagesController.render(partial: 'messages/message', locals: { message: message })
   end
 end

@@ -1,2 +1,2 @@
-= form_for [@room, Game.new], remote: true do |f|
-  = f.submit 'ゲーム開始', class: 'new-game-form__submit'
+= form_for [@room, Game.new], remote: true, html: { class: 'new-game' } do |f|
+  = f.submit 'ゲーム開始', class: 'new-game__submit'
