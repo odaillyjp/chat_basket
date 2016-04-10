@@ -1,0 +1,8 @@
+.player
+  .player__top-layout
+    %h2 場札
+    .player__current_char= game.top_layout.char
+  .player__hands
+    %h2 あなたの手札
+    - player.hands.each do |hand|
+      %span.player__hand= hand

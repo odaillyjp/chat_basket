@@ -4,7 +4,7 @@ class Room < ApplicationRecord
   has_many :attendances
   has_many :members, source: :user, through: :attendances
 
-  belongs_to :current_game, class_name: Game, optional: true
+  belongs_to :current_game, class_name: 'Game', optional: true
 
   validates :name, presence: true
 
@@ -30,5 +30,9 @@ class Room < ApplicationRecord
 
   def waiting?
     !current_game_id
+  end
+
+  def playing_game?
+    !!current_game.try(:playing?)
   end
 end

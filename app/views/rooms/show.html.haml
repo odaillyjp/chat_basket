@@ -11,9 +11,14 @@
 
   .room__messages
     %h2 チャット
-
     = render 'messages/messages', room: @room
+
+  .room__player
+    - if @room.playing_game?
+      = render 'players/show', game: @room.current_game, player: @room.current_game.players.find_by(user: @current_user)
+
+  .room__new-message
     = render 'messages/new', room: @room
 
-    %div{ class: hiding_bem_class("room__new-game", !@room.waiting?) }
-      = render 'games/new', room: @room
+  %div{ class: hiding_bem_class("room__new-game", !@room.waiting?) }
+    = render 'games/new', room: @room
