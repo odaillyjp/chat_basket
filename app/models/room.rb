@@ -29,6 +29,6 @@ class Room < ApplicationRecord
   end
 
   def waiting?
-    !games.without_gameover.exists?
+    !current_game_id
   end
 end

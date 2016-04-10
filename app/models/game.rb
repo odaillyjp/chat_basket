@@ -4,8 +4,6 @@ class Game < ApplicationRecord
   has_many   :players
   has_many   :layouts
 
-  scope :without_gameover, -> { where(winner_id: nil) }
-
   def enqueue_setup
     GameSetupJob.perform_later(self)
   end
