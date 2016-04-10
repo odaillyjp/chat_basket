@@ -19,6 +19,8 @@ class Room < ApplicationRecord
       @game = games.build
       members.map { |member| @game.players.build(user: member) }
       @game.save!
+      self.current_game = @game
+      save!
     end
   end
 
