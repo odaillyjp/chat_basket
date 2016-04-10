@@ -1,4 +1,4 @@
-App.channels = {}
+App.channels ||= {}
 App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
   connected: ->
     @followCurrentRoom()
