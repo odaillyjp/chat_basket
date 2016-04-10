@@ -4,6 +4,8 @@ class Room < ApplicationRecord
   has_many :attendances
   has_many :members, source: :user, through: :attendances
 
+  belongs_to :current_game, class_name: Game, optional: true
+
   validates :name, presence: true
 
   def create_game!
