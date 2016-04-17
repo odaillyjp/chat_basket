@@ -9,6 +9,8 @@ class Room < ApplicationRecord
   validates :name, presence: true
 
   def create_game!
+    game = nil
+
     with_lock do
       raise '準備中です' unless waiting?
 
@@ -16,12 +18,14 @@ class Room < ApplicationRecord
         command: 'changeRoomStatus',
         status:  'creatingGame'
 
-      @game = games.build
-      members.map { |member| @game.players.build(user: member) }
-      @game.save!
-      self.current_game = @game
+      game = games.build
+      members.map { |member| game.players.build(user: member) }
+      game.save!
+      self.current_game = game
       save!
     end
+
+    game.enqueue_setup!
   end
 
   def member?(user)

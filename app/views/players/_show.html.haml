@@ -6,4 +6,4 @@
     %h2 あなたの手札
     - player.hands.each do |hand|
       %span.player__hand
-        = link_to hand, '', class: 'player__hand-selector', data: { char: hand }
+        = link_to hand.char, '', class: 'player__hand-selector', data: { hand_id: hand.id, hand_char: hand.char }

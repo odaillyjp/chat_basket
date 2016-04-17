@@ -11,8 +11,10 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5.x'
 gem 'jbuilder', '~> 2.0'
 
+gem 'activerecord-import'
 gem 'haml-rails'
 gem 'redis'
+gem 'unf'
 
 group :development, :test do
   gem 'byebug'

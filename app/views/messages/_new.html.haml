@@ -1,4 +1,4 @@
 = form_for [@room, Message.new], remote: true, html: { class: 'new-message' } do |f|
   = f.text_field :content, width: '100', class: 'new-message__content'
-  = f.hidden_field :selected_hand, value: '', class: 'new-message__selected-hand'
+  = f.hidden_field :selected_hand_id, value: '', class: 'new-message__selected-hand-id'
   = f.submit '送信', class: 'new-message__submit'
