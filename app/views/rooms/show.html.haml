@@ -15,7 +15,7 @@
 
   .room__player
     - if @room.playing_game?
-      = render 'players/show', game: @room.current_game, player: @room.current_game.players.find_by(user: @current_user)
+      = render 'players/show', game: @room.current_game, player: @room.current_game.find_player_by_user(@current_user)
 
   .room__new-message
     = render 'messages/new', room: @room
