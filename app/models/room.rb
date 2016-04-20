@@ -32,11 +32,21 @@ class Room < ApplicationRecord
     members.include?(user)
   end
 
-  def waiting?
-    !current_game_id
-  end
-
   def playing_game?
     !!current_game.try(:playing?)
+  end
+
+  def status
+    if waiting?
+      '待機中'
+    elsif playing_game?
+      'ゲーム中'
+    else
+      '準備中'
+    end
+  end
+
+  def waiting?
+    !current_game_id
   end
 end

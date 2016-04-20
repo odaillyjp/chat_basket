@@ -5,6 +5,10 @@
 .room{ data: { 'room-id': @room.id } }
   %h1= @room.name
 
+  .room__status
+    %h2 部屋の状態
+    %p= @room.status
+
   .room__members
     %h2 参加者
     - @room.members.each do |member|
