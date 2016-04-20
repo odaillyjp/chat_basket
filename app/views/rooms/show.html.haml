@@ -1,5 +1,6 @@
 .header
-  %p= @current_user.name
+  .current-user{ data: { id: current_user.id } }
+    .current-user__name= current_user.name
 
 .room{ data: { 'room-id': @room.id } }
   %h1= @room.name
@@ -14,8 +15,8 @@
     = render 'messages/messages', room: @room
 
   .room__player
-    - if @room.playing_game?
-      = render 'players/show', game: @room.current_game, player: @room.current_game.find_player_by_user(@current_user)
+    - if @room.playing_game? && current_user.join_game?(@room.current_game)
+      = render 'players/show', game: @room.current_game, player: @room.current_game.find_player_by_user(current_user)
 
   .room__new-message
     = render 'messages/new', room: @room
