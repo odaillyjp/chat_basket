@@ -1,29 +1,28 @@
-.header
-  .current-user{ data: { id: current_user.id } }
-    .current-user__name= current_user.name
-
 .room{ data: { 'room-id': @room.id } }
-  %h1= @room.name
+  .room-main
+    %h1= @room.name
 
-  .room__status
-    %h2 部屋の状態
-    %p= @room.status
+    .room-main__messages
+      %h2 チャット
+      = render 'messages/messages', room: @room
 
-  .room__members
-    %h2 参加者
-    - @room.members.each do |member|
-      %p= member.name
+    .room-main__player
+      - if @room.playing_game? && current_user.join_game?(@room.current_game)
+        = render 'players/show', game: @room.current_game, player: @room.current_game.find_player_by_user(current_user)
 
-  .room__messages
-    %h2 チャット
-    = render 'messages/messages', room: @room
+    .room-main__new-message
+      = render 'messages/new', room: @room
 
-  .room__player
-    - if @room.playing_game? && current_user.join_game?(@room.current_game)
-      = render 'players/show', game: @room.current_game, player: @room.current_game.find_player_by_user(current_user)
+    %div{ class: hiding_bem_class("room-main__new-game", !@room.waiting?) }
+      = render 'games/new', room: @room
 
-  .room__new-message
-    = render 'messages/new', room: @room
+  .room-sidebar
+    %h1 ゲームの状態
 
-  %div{ class: hiding_bem_class("room__new-game", !@room.waiting?) }
-    = render 'games/new', room: @room
+    .room-sidebar__status
+      = @room.status
+
+    .room-sidebar__members
+      %h2 参加者
+      - @room.members.each do |member|
+        %p= member.name
