@@ -3,6 +3,6 @@ class GameSetupJob < ApplicationJob
 
   def perform(game)
     game.setup!
-    game.broadcast_status_to_players
+    game.broadcast_playing_status_to_players
   end
 end

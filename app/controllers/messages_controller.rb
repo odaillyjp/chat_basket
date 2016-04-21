@@ -7,9 +7,15 @@ class MessagesController < ApplicationController
       # NOTE: カードをプレイした時は単語の検証を行う
       # TODO: クライアント側でリクエスト先を変えたい気持ち
       hand = Hand.find(params[:message][:selected_hand_id])
-      @room.current_game.play_card!(@current_user, hand, params[:message][:content])
-      @room.current_game.reload
-      @room.current_game.broadcast_status_to_players
+      current_game = @room.current_game
+      current_game.play_card!(@current_user, hand, params[:message][:content])
+      current_game.reload
+
+      if current_game.playing?
+        current_game.broadcast_playing_status_to_players
+      else
+        current_game.broadcast_gameover_status_to_players
+      end
     else
       # NOTE: それ以外の時はメッセージを保存
       @comment = @room.messages.build(message_params)
