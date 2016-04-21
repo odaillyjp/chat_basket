@@ -43,4 +43,5 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
     $('.room__player').html(body)
 
   scrollBottom: ->
-    $(window).scrollTop($(document).height())
+    messagesArea = $('.messages')
+    messagesArea.scrollTop(messagesArea[0].scrollHeight)

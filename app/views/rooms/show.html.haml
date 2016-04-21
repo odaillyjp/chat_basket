@@ -1,28 +1,29 @@
 .room{ data: { 'room-id': @room.id } }
-  .room-main
-    %h1= @room.name
+  .room__main
+    .room__notifier
+      - if @room.waiting?
+        参加者が揃ったら「ゲーム開始」ボタンを押してください
+      - elsif @room.playing_game? && !current_user.join_game?(@room.current_game)
+        ゲーム中です。ゲームが終わるまで待っていてください。
+      - else
+        あなたはゲーム参加者です。頑張ってください！
 
-    .room-main__messages
-      %h2 チャット
+    .room__messages
       = render 'messages/messages', room: @room
 
-    .room-main__player
+    .room__player
       - if @room.playing_game? && current_user.join_game?(@room.current_game)
         = render 'players/show', game: @room.current_game, player: @room.current_game.find_player_by_user(current_user)
 
-    .room-main__new-message
-      = render 'messages/new', room: @room
+    .room__form
+      .room__new-message
+        = render 'messages/new', room: @room
 
-    %div{ class: hiding_bem_class("room-main__new-game", !@room.waiting?) }
-      = render 'games/new', room: @room
+      %div{ class: hiding_bem_class("room__new-game", !@room.waiting?) }
+        = render 'games/new', room: @room
 
-  .room-sidebar
-    %h1 ゲームの状態
-
-    .room-sidebar__status
-      = @room.status
-
-    .room-sidebar__members
+  .room__sidebar
+    .room__members
       %h2 参加者
       - @room.members.each do |member|
-        %p= member.name
+        %p{ class: (current_user == member ? 'room__member--current' : 'room__member') }= member.name

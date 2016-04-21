@@ -1,2 +1,40 @@
 .room
   display: flex
+  height: 100%
+
+  &__main
+    display: flex
+    flex: 1
+    flex-direction: column
+    height: 100%
+
+    .room
+      &__notifier
+        height: 20px
+        position: absolute
+
+      &__messages
+        box-sizing: border-box
+        flex: 1
+        height: 100%
+        padding: 20px 0 40px
+
+      &__form
+        bottom: 0
+        height: 40px
+        position: absolute
+
+        .room
+          &__new-game
+            &--disabled
+              display: none
+
+  &__sidebar
+    display: flex
+    flex-direction: column
+    width: 320px
+
+    .room
+      &__member
+        &--current
+          font-weight: bold
