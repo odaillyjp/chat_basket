@@ -11,7 +11,7 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
       when 'changeRoomStatus'
         @changeRoomStatus(data['status'])
       when 'startGame'
-        @showPlayerStatus(data['body'])
+        @changeGameStatus(data['game_body'], data['player_body'])
       else
         false
 
@@ -39,8 +39,9 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
     newGameForm.addClass('room__new-game--disabled')
     newGameForm.removeClass('room__new-game')
 
-  showPlayerStatus: (body) ->
-    $('.room__player').html(body)
+  changeGameStatus: (gameBody, playerBody) ->
+    $('.room__game').html(gameBody)
+    $('.room__player').html(playerBody)
 
   scrollBottom: ->
     messagesArea = $('.messages')

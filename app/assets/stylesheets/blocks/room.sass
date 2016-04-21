@@ -1,3 +1,9 @@
+$room_notifier_height: 20px
+$room_game_height: 240px
+$room_player_height: 40px
+$room_form_height: 40px
+$room_sidebar_width: 300px
+
 .room
   display: flex
   height: 100%
@@ -7,21 +13,35 @@
     flex: 1
     flex-direction: column
     height: 100%
+    position: relative
+    width: 100%
 
     .room
       &__notifier
-        height: 20px
+        height: $room_notifier_height
         position: absolute
+        top: 0
+
+      &__game
+        height: $room_game_height
+        position: absolute
+        top: $room_notifier_height
+        width: 100%
 
       &__messages
         box-sizing: border-box
         flex: 1
         height: 100%
-        padding: 20px 0 40px
+        padding: ($room_notifier_height + $room_game_height) 0 ($room_player_height + $room_form_height)
+
+      &__player
+        bottom: $room_form_height
+        height: $room_player_height
+        position: absolute
 
       &__form
         bottom: 0
-        height: 40px
+        height: $room_form_height
         position: absolute
 
         .room
@@ -32,7 +52,7 @@
   &__sidebar
     display: flex
     flex-direction: column
-    width: 320px
+    width: $room_sidebar_width
 
     .room
       &__member

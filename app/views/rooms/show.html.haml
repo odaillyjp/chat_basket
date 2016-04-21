@@ -8,12 +8,16 @@
       - else
         あなたはゲーム参加者です。頑張ってください！
 
+    .room__game
+      - if @room.playing_game?
+        = render 'games/game', game: @room.current_game
+
     .room__messages
       = render 'messages/messages', room: @room
 
     .room__player
       - if @room.playing_game? && current_user.join_game?(@room.current_game)
-        = render 'players/show', game: @room.current_game, player: @room.current_game.find_player_by_user(current_user)
+        = render 'players/player', game: @room.current_game, player: @room.current_game.find_player_by_user(current_user)
 
     .room__form
       .room__new-message

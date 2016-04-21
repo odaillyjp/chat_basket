@@ -9,7 +9,8 @@ class Game < ApplicationRecord
     players.each do |player|
       ActionCable.server.broadcast "rooms:#{room_id}:users:#{player.user_id}",
         command: 'startGame',
-        body: PlayersController.render(partial: 'players/show', locals: { game: self, player: player })
+        game_body: GamesController.render(partial: 'games/game', locals: { game: self }),
+        player_body: PlayersController.render(partial: 'players/player', locals: { game: self, player: player })
     end
   end
 
