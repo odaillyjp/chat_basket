@@ -24,10 +24,10 @@
         = render 'messages/new', room: @room
 
   .room__sidebar
-    %div{ class: hiding_bem_class("room__new-game", !@room.waiting?) }
+    %div{ class: add_modifier_class('room__new-game', 'disabled', !@room.waiting?) }
       = render 'games/new', room: @room
 
     .room__members
       %h2 参加者
       - @room.members.each do |member|
-        %p{ class: (current_user == member ? 'room__member--current' : 'room__member'), data: { id: member.id } }= member.name
+        %p{ class: add_modifier_class('room__member', 'current', (current_user == member)), data: { id: member.id } }= member.name
