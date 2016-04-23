@@ -30,4 +30,4 @@
     .room__members
       %h2 参加者
       - @room.members.each do |member|
-        %p{ class: (current_user == member ? 'room__member--current' : 'room__member') }= member.name
+        %p{ class: (current_user == member ? 'room__member--current' : 'room__member'), data: { id: member.id } }= member.name

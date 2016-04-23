@@ -2,7 +2,6 @@ App.channels ||= {}
 App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
   connected: ->
     @followCurrentRoom()
-    @currentUser = $('.current-user').data('id')
 
   received: (data) ->
     switch data['command']
@@ -24,15 +23,16 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
 
   followCurrentRoom: ->
     if roomId = $('.room').data('room-id')
+      @currentUser = $('.room__member--current').data('id')
       @perform 'follow', room_id: roomId
     else
+      @currentUser = null
       @perform 'unfollow'
 
   appendMessage: (body, userId) ->
     $('.messages').append(body)
     @scrollBottom()
-    if userId == @currentUser
-      $('.new-message__content').focus()
+    $('.new-message__content').focus() if userId == @currentUser
 
   changeRoomStatus: (status) ->
     switch status
