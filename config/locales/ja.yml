@@ -1,0 +1,7 @@
+ja:
+  notifier:
+    not_player: あなたはゲームに参加していません。
+    not_has_hand: あなたが所有していないカードを選んでいます。
+    exited_game: ゲームは終了しています。
+    mismatch_word: "「%{word_name}」は「%{head}」で始まり、「%{last}」で終わる単語ではありません。"
+    length_required: "%{min_length}文字以上の単語を発言してください。"

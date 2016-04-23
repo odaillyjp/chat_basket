@@ -9,6 +9,7 @@ class Game < ApplicationRecord
     players.each do |player|
       ActionCable.server.broadcast "rooms:#{room_id}:users:#{player.user_id}",
         command: 'startGame',
+        notifier: RoomsController.render(partial: 'rooms/playing_notifier', locals: { head: top_layout.char }),
         game_body: GamesController.render(partial: 'games/game', locals: { game: self }),
         player_body: PlayersController.render(partial: 'players/player', locals: { game: self, player: player })
     end
@@ -17,6 +18,7 @@ class Game < ApplicationRecord
   def broadcast_gameover_status_to_players
     ActionCable.server.broadcast "rooms:#{room_id}:messages",
       command: 'exitGame',
+      notifier: RoomsController.render(partial: 'rooms/waiting_notifier'),
       winner: winner
   end
 
@@ -42,10 +44,11 @@ class Game < ApplicationRecord
       #   - 単語の始まりが場札の文字であり、かつ、単語の終わりが選択した文字であること
       #   - 単語が3文字以上であること（ラスト1枚は4文字以上）
       player = find_player_by_user(user)
-      raise unless player
-      raise unless player.has_hand?(hand)
-      raise unless playing?
-      raise unless valid_word?(word_name, hand.char, player)
+      raise I18n.t('notifier.not_player') unless player
+      raise I18n.t('notifier.not_has_hand') unless player.has_hand?(hand)
+      raise I18n.t('notifier.exited_game') unless playing?
+      raise I18n.t('notifier.mismatch_word', word_name: word_name, head: top_layout.char, last: hand.char) unless valid_word_head_and_last?(word_name, hand.char)
+      raise I18n.t('notifier.length_required', min_length: require_min_length(player)) unless valid_word_length?(word_name, player)
 
       layouts.create(orner: player, char: hand.char, word: word_name)
       player.remove_hand!(hand)
@@ -85,12 +88,16 @@ class Game < ApplicationRecord
     end
   end
 
-  def valid_word?(word_name, last_char, player)
-     word = Word.new(word_name)
-     return false unless word.head == top_layout.char
-     return false unless word.last == last_char
+  def valid_word_head_and_last?(word_name, last_char)
+    word = Word.new(word_name)
+    (word.head == top_layout.char) && (word.last == last_char)
+  end
 
-     min_length = (player.reaching? ? 4 : 3)
-     word.length >= min_length
+  def valid_word_length?(word_name, player)
+    word_name.length >= require_min_length(player)
+  end
+
+  def require_min_length(player)
+    player.reaching? ? 4 : 3
   end
 end

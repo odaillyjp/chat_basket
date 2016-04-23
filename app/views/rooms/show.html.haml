@@ -2,11 +2,11 @@
   .room__main
     .room__notifier
       - if @room.waiting?
-        参加者が揃ったら「ゲーム開始」ボタンを押してください
+        = render 'rooms/waiting_notifier'
       - elsif @room.playing_game? && !current_user.join_game?(@room.current_game)
-        ゲーム中です。ゲームが終わるまで待っていてください。
+        = render 'rooms/watching_notifier'
       - else
-        あなたはゲーム参加者です。頑張ってください！
+        = render 'rooms/playing_notifier', head: @room.current_game.top_layout.char
 
     .room__game
       - if @room.playing_game?

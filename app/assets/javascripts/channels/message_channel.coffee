@@ -17,6 +17,11 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
       else
         false
 
+    if data['alertMessage']
+      @showAlertMessage(data['alertMessage'])
+    else if data['notifier']
+      @changeNotifier(data['notifier'])
+
   followCurrentRoom: ->
     if roomId = $('.room').data('room-id')
       @perform 'follow', room_id: roomId
@@ -54,6 +59,12 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
     $('.room__game').html('')
     $('.room__player').html('')
     @showNewGameButton()
+
+  showAlertMessage: (message) ->
+    $('.room__notifier').html("<div class='room-notifier__content--alert'>#{message}</div>")
+
+  changeNotifier: (body) ->
+    $('.room__notifier').html(body)
 
   scrollBottom: ->
     messagesArea = $('.messages')
