@@ -44,11 +44,9 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
   hideNewGameButton: ->
     newGameForm = $('.room__new-game')
     newGameForm.addClass('room__new-game--disabled')
-    newGameForm.removeClass('room__new-game')
 
   showNewGameButton: ->
     newGameForm = $('.room__new-game--disabled')
-    newGameForm.addClass('room__new-game')
     newGameForm.removeClass('room__new-game--disabled')
 
   changeGameStatus: (gameBody, playerBody) ->
