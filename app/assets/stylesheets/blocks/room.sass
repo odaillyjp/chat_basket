@@ -1,5 +1,5 @@
 $room_notifier_height: 24px
-$room_messages_height: 480px
+$room_messages_height: 440px
 $room_player_height: 40px
 $room_form_height: 40px
 $room_sidebar_width: 300px
@@ -33,6 +33,7 @@ $room_sidebar_width: 300px
         padding: $room_notifier_height 0 ($room_messages_height + $room_player_height + $room_form_height)
 
       &__messages
+        background: #fff
         bottom: ($room_player_height + $room_form_height)
         height: $room_messages_height
         position: absolute
@@ -41,19 +42,16 @@ $room_sidebar_width: 300px
       &__player
         bottom: $room_form_height
         height: $room_player_height
+        padding-left: 10px
         position: absolute
         width: 100%
 
       &__form
         bottom: 0
         height: $room_form_height
+        padding-left: 10px
         position: absolute
         width: 100%
-
-        .room
-          &__new-game
-            &--disabled
-              display: none
 
   &__sidebar
     display: flex
@@ -61,6 +59,10 @@ $room_sidebar_width: 300px
     width: $room_sidebar_width
 
     .room
+      &__new-game
+        &--disabled
+          display: none
+
       &__member
         &--current
           font-weight: bold

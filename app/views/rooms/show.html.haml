@@ -23,10 +23,10 @@
       .room__new-message
         = render 'messages/new', room: @room
 
-      %div{ class: hiding_bem_class("room__new-game", !@room.waiting?) }
-        = render 'games/new', room: @room
-
   .room__sidebar
+    %div{ class: hiding_bem_class("room__new-game", !@room.waiting?) }
+      = render 'games/new', room: @room
+
     .room__members
       %h2 参加者
       - @room.members.each do |member|
