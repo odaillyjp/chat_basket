@@ -1,3 +1,4 @@
 %article.message{ id: "message_#{message.id}" }
-  %p= message.user.name
-  %p= message.content
+  .message__name= message.user.name
+  .message__created-at= message.created_at.to_s(:short)
+  .message__content= message.content
