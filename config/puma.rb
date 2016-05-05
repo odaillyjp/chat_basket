@@ -44,5 +44,5 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # end
 
 # Allow puma to be restarted by `rails restart` command.
-# TODO: Rails5.0.0.beta3 では不具合があるのでコメントアウト
+# TODO: 現時点の puma では不具合があるのでコメントアウト
 # plugin :tmp_restart
