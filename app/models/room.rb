@@ -28,8 +28,25 @@ class Room < ApplicationRecord
     game.enqueue_setup!
   end
 
+  def join_user!(user)
+    self.attendances.create(user: user)
+
+    ActionCable.server.broadcast "rooms:#{id}:messages",
+      command: 'changeRoomMembers',
+      body:    RoomsController.render(partial: 'rooms/members', locals: { room: self })
+  end
+
   def member?(user)
     members.include?(user)
+  end
+
+  def leave_user!(user)
+    self.attendances.find_by(user: user).try(:destroy)
+    reload
+
+    ActionCable.server.broadcast "rooms:#{id}:messages",
+      command: 'changeRoomMembers',
+      body:    RoomsController.render(partial: 'rooms/members', locals: { room: self })
   end
 
   def playing_game?

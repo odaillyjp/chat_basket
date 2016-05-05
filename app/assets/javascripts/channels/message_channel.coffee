@@ -7,6 +7,8 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
     switch data['command']
       when 'appendMessage'
         @appendMessage(data['body'], data['user_id'])
+      when 'changeRoomMembers'
+        @changeRoomMembers(data['body'])
       when 'changeRoomStatus'
         @changeRoomStatus(data['status'])
       when 'startGame'
@@ -33,6 +35,9 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
     $('.messages').append(body)
     @scrollBottom()
     $('.new-message__content').focus() if userId == @currentUser
+
+  changeRoomMembers: (body) ->
+    $('.room__members').html(body)
 
   changeRoomStatus: (status) ->
     switch status

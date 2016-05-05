@@ -28,6 +28,4 @@
       = render 'games/new', room: @room
 
     .room__members
-      %h2 参加者
-      - @room.members.each do |member|
-        %p{ class: add_modifier_class('room__member', 'current', (current_user == member)), data: { id: member.id } }= member.name
+      = render 'rooms/members', room: @room

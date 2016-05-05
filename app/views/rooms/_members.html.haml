@@ -1,0 +1,4 @@
+.members
+  %h2 参加者
+  - room.members.each do |member|
+    = render 'rooms/member', member: member

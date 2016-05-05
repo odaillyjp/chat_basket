@@ -6,7 +6,6 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @room.attendances.create(user: current_user) unless @room.member?(current_user)
   end
 
   private
