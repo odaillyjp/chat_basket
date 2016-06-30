@@ -4,9 +4,9 @@ class MessagesChannel < ApplicationCable::Channel
     @room = Room.find(data['room_id'])
 
     if @room
-      @room.join_user!(current_user) unless @room.member?(current_user)
       stream_from "rooms:#{@room.id}:messages"
       stream_from "rooms:#{@room.id}:users:#{current_user.id}"
+      @room.join_user!(current_user) unless @room.member?(current_user)
     end
   end
 

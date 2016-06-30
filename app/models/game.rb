@@ -26,6 +26,10 @@ class Game < ApplicationRecord
     GameSetupJob.perform_later(self)
   end
 
+  def gameover!
+    room.update_attributes(current_game_id: nil)
+  end
+
   def find_player_by_user(user)
     players.find_by(user: user)
   end
@@ -57,8 +61,7 @@ class Game < ApplicationRecord
       if player.grab_victory?
         self.winner = player
         save!
-
-        room.update_attributes(current_game_id: nil)
+        gameover!
       end
     end
 
