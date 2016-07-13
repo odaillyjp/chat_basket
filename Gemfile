@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 
 ruby '2.3.0'
-gem 'rails', '>= 5.0.0.rc2', '< 5.1'
+gem 'rails', '>= 5.0.0', '< 5.1'
 gem 'puma'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 
 gem 'jquery-rails'
-gem 'turbolinks', '~> 5.x'
+gem 'turbolinks', '~> 5.0'
 gem 'jbuilder', '~> 2.0'
 
 gem 'activerecord-import'
