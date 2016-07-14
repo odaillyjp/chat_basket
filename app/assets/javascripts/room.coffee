@@ -1,4 +1,9 @@
 $(document).on 'turbolinks:load', ->
+  messagesArea = $('.messages')
+  messagesArea.scrollTop(messagesArea[0].scrollHeight)
+  $('.new-message__content').focus()
+  false
+
   $('.room__player').on 'click', '.player__hand-selector', ->
     selectedLink = $(@)
     $('.new-message__selected-hand-id').val(selectedLink.data('hand-id'))
