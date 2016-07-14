@@ -24,7 +24,7 @@
         = render 'messages/new', room: @room
 
   .room__sidebar
-    %div{ class: add_modifier_class('room__new-game', 'disabled', !@room.waiting?) }
+    %div{ class: class_name_with_modifier('room__new-game', 'disabled', !@room.waiting?) }
       = render 'games/new', room: @room
 
     .room__members
