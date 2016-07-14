@@ -6,5 +6,5 @@ class Attendance < ApplicationRecord
   validates :user_id, presence: true
   validates :status,  presence: true
 
-  enum status: %i(away active)
+  enum status: %i(active away)
 end
