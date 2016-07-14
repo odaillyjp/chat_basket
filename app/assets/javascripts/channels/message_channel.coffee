@@ -30,7 +30,7 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
 
   followCurrentRoom: ->
     if roomId = $('.room').data('room-id')
-      @currentUser = $('.room__member--current').data('id')
+      @currentUser = $('.member--current').data('id')
       @perform 'follow', room_id: roomId
     else
       @currentUser = null

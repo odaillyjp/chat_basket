@@ -6,12 +6,12 @@ class MessagesChannel < ApplicationCable::Channel
     if @room
       stream_from "rooms:#{@room.id}:messages"
       stream_from "rooms:#{@room.id}:users:#{current_user.id}"
-      @room.join_user!(current_user) unless @room.member?(current_user)
+      @room.join_user!(current_user) unless @room.active_member?(current_user)
     end
   end
 
   def unsubscribed
-    @room.leave_user!(current_user) if @room.try(:member?, current_user)
+    @room.leave_user!(current_user) if @room.try(:active_member?, current_user)
   end
 
   def unfollow

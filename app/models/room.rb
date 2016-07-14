@@ -3,10 +3,15 @@ class Room < ApplicationRecord
   has_many :games
   has_many :attendances
   has_many :members, source: :user, through: :attendances
+  has_many :active_members, -> { where(attendances: { status: 1 }) }, source: :user, through: :attendances
 
   belongs_to :current_game, class_name: 'Game', optional: true
 
   validates :name, presence: true
+
+  def active_member?(user)
+    active_members.include?(user)
+  end
 
   def create_game!
     game = nil
@@ -29,19 +34,17 @@ class Room < ApplicationRecord
   end
 
   def join_user!(user)
-    self.attendances.create(user: user)
+    attendance = self.attendances.find_or_initialize_by(user: user)
+    attendance.status = 1
+    attendance.save
 
     ActionCable.server.broadcast "rooms:#{id}:messages",
       command: 'changeRoomMembers',
       body:    RoomsController.render(partial: 'rooms/members', locals: { room: self })
   end
 
-  def member?(user)
-    members.include?(user)
-  end
-
   def leave_user!(user)
-    self.attendances.find_by(user: user).try(:destroy)
+    self.attendances.find_by(user: user).update_attributes(status: 0)
     reload
 
     ActionCable.server.broadcast "rooms:#{id}:messages",

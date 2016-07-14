@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417050849) do
+ActiveRecord::Schema.define(version: 20160714063647) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "room_id",    null: false
     t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "status",     null: false
+    t.index ["room_id"], name: "index_attendances_on_room_id"
+    t.index ["status"], name: "index_attendances_on_status"
+    t.index ["user_id"], name: "index_attendances_on_user_id"
   end
-
-  add_index "attendances", ["room_id"], name: "index_attendances_on_room_id"
-  add_index "attendances", ["user_id"], name: "index_attendances_on_user_id"
 
   create_table "games", force: :cascade do |t|
     t.integer  "room_id",    null: false
@@ -29,19 +29,17 @@ ActiveRecord::Schema.define(version: 20160417050849) do
     t.integer  "winner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_games_on_room_id"
+    t.index ["winner_id"], name: "index_games_on_winner_id"
   end
-
-  add_index "games", ["room_id"], name: "index_games_on_room_id"
-  add_index "games", ["winner_id"], name: "index_games_on_winner_id"
 
   create_table "hands", force: :cascade do |t|
     t.integer  "orner_id",   null: false
     t.string   "char",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["orner_id"], name: "index_hands_on_orner_id"
   end
-
-  add_index "hands", ["orner_id"], name: "index_hands_on_orner_id"
 
   create_table "layouts", force: :cascade do |t|
     t.integer  "game_id",    null: false
@@ -50,10 +48,9 @@ ActiveRecord::Schema.define(version: 20160417050849) do
     t.integer  "orner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_layouts_on_game_id"
+    t.index ["orner_id"], name: "index_layouts_on_orner_id"
   end
-
-  add_index "layouts", ["game_id"], name: "index_layouts_on_game_id"
-  add_index "layouts", ["orner_id"], name: "index_layouts_on_orner_id"
 
   create_table "messages", force: :cascade do |t|
     t.text     "content",    null: false
@@ -61,29 +58,26 @@ ActiveRecord::Schema.define(version: 20160417050849) do
     t.integer  "room_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
-
-  add_index "messages", ["room_id"], name: "index_messages_on_room_id"
-  add_index "messages", ["user_id"], name: "index_messages_on_user_id"
 
   create_table "players", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "game_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_players_on_game_id"
+    t.index ["user_id"], name: "index_players_on_user_id"
   end
-
-  add_index "players", ["game_id"], name: "index_players_on_game_id"
-  add_index "players", ["user_id"], name: "index_players_on_user_id"
 
   create_table "rooms", force: :cascade do |t|
     t.string   "name",            null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "current_game_id"
+    t.index ["current_game_id"], name: "index_rooms_on_current_game_id"
   end
-
-  add_index "rooms", ["current_game_id"], name: "index_rooms_on_current_game_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name",       null: false

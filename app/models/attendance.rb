@@ -4,4 +4,9 @@ class Attendance < ApplicationRecord
 
   validates :room_id, presence: true
   validates :user_id, presence: true
+  validates :status,  presence: true
+
+  def active?
+    status == 1
+  end
 end
