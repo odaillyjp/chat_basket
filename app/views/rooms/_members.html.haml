@@ -1,4 +1,6 @@
 .members
   %h2 参加者
-  - room.members.each do |member|
-    = render 'rooms/member', member: member
+  - room.active_members.order(:id).each do |member|
+    = render 'rooms/member', member: member, active: true
+  - room.away_members.order(:id).each do |member|
+    = render 'rooms/member', member: member, active: false

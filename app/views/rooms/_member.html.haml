@@ -1,1 +1,2 @@
-%div{ class: class_name_with_modifier('member', 'current', (current_user == member)), data: { id: member.id } }= member.name
+- class_name = active ? class_name_with_modifier('member', 'current', (current_user == member)) : 'member--away'
+%div{ class: class_name, data: { id: member.id } }= member.name
