@@ -3,8 +3,8 @@ class Room < ApplicationRecord
   has_many :games
   has_many :attendances
   has_many :members, source: :user, through: :attendances
-  has_many :active_members, -> { where(attendances: { status: 1 }) }, source: :user, through: :attendances
-  has_many :away_members, -> { where(attendances: { status: 0 }) }, source: :user, through: :attendances
+  has_many :active_members, -> { merge(Attendance.active) }, source: :user, through: :attendances
+  has_many :away_members, -> { merge(Attendance.away) }, source: :user, through: :attendances
 
   belongs_to :current_game, class_name: 'Game', optional: true
 
@@ -36,7 +36,7 @@ class Room < ApplicationRecord
 
   def join_user!(user)
     attendance = self.attendances.find_or_initialize_by(user: user)
-    attendance.status = 1
+    attendance.status = :active
     attendance.save
 
     ActionCable.server.broadcast "rooms:#{id}:messages",
@@ -45,7 +45,7 @@ class Room < ApplicationRecord
   end
 
   def leave_user!(user)
-    self.attendances.find_by(user: user).update_attributes(status: 0)
+    self.attendances.find_by(user: user).away!
     reload
 
     ActionCable.server.broadcast "rooms:#{id}:messages",
