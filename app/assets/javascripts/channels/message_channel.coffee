@@ -1,7 +1,12 @@
 App.channels ||= {}
 App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
   connected: ->
+    @install()
     @followCurrentRoom()
+
+  install: ->
+    $(document).on 'turbolinks:load', =>
+      @followCurrentRoom()
 
   received: (data) ->
     switch data['command']
