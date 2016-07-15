@@ -39,7 +39,6 @@ class Room < ApplicationRecord
     attendance.status = :active
     attendance.save
 
-    # TODO: current_user をどうにかしたい
     ActionCable.server.broadcast "rooms:#{id}:messages",
       command: 'changeRoomMembers',
       body:    RoomsController.render(partial: 'rooms/members', locals: { room: self })
