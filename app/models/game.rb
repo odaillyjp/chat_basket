@@ -28,6 +28,9 @@ class Game < ApplicationRecord
 
   def gameover!
     room.update_attributes(current_game_id: nil)
+
+    # ゲーム終了時に離席者を削除する
+    room.remove_away_members!
   end
 
   def find_player_by_user(user)

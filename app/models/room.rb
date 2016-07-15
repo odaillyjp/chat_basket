@@ -57,6 +57,15 @@ class Room < ApplicationRecord
     !!current_game.try(:playing?)
   end
 
+  def remove_away_members!
+    # NOTE: 速度優先のために delete_all を使用
+    self.attendances.where(status: :away).delete_all
+
+    ActionCable.server.broadcast "rooms:#{id}:messages",
+      command: 'changeRoomMembers',
+      body:    RoomsController.render(partial: 'rooms/members', locals: { room: self })
+  end
+
   def status
     if waiting?
       '待機中'
