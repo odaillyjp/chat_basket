@@ -8,13 +8,8 @@ $(document).on 'turbolinks:load', ->
     false
 
   $('.room__player').on 'click', '.player__hand-selector--selected', ->
-    $('.new-message__content').focus()
     false
 
-  $('.room__player').on 'click', '.player__reset', ->
-    $('.new-message__content').focus()
-    false
- 
   init = ->
     messagesArea = $('.messages')
     if messagesArea.length > 0
