@@ -46,11 +46,11 @@ class Room < ApplicationRecord
 
   def leave_user!(user)
     self.attendances.find_by(user: user).away!
-    reload
 
-    ActionCable.server.broadcast "rooms:#{id}:messages",
-      command: 'changeRoomMembers',
-      body:    RoomsController.render(partial: 'rooms/members', locals: { room: self })
+    # TODO: join_user! の broadcast と処理が被ってしまい、うまく送信できないことがあるのでコメントアウト
+    # ActionCable.server.broadcast "rooms:#{id}:messages",
+    #   command: 'changeRoomMembers',
+    #   body:    RoomsController.render(partial: 'rooms/members', locals: { room: self })
   end
 
   def playing_game?
