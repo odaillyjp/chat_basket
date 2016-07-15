@@ -12,6 +12,8 @@
       - if @room.playing_game?
         = render 'games/game', game: @room.current_game
 
+    .room__whitespace
+
     .room__messages
       = render 'messages/messages', room: @room
 
