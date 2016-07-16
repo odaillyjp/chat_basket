@@ -19,9 +19,9 @@ class HandsController < ApplicationController
     current_game.reload
 
     if current_game.playing?
-      current_game.broadcast_playing_status_to_players
+      current_game.broadcast_status_to_players
     else
-      current_game.broadcast_gameover_status_to_players
+      current_game.broadcast_game_over_to_players
     end
 
     head :ok

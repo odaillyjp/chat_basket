@@ -19,7 +19,7 @@
 
     .room__player
       - if @room.playing_game? && current_user.join_game?(@room.current_game)
-        = render 'players/player', game: @room.current_game, player: @room.current_game.find_player_by_user(current_user)
+        = render 'players/player', player: @room.current_game.find_player_by_user(current_user)
 
     .room__form
       .room__new-message

@@ -5,21 +5,29 @@ class Game < ApplicationRecord
   has_many   :layouts
   has_one    :top_layout, -> { order(created_at: :desc) }, class_name: 'Layout'
 
-  def broadcast_playing_status_to_players
+  def broadcast_game_over_to_players
+    ActionCable.server.broadcast "rooms:#{room_id}:messages",
+      command: 'exitGame',
+      notifier: RoomsController.render(partial: 'rooms/waiting_notifier'),
+      winner: winner
+  end
+
+  def broadcast_game_start_to_players
     players.each do |player|
       ActionCable.server.broadcast "rooms:#{room_id}:users:#{player.user_id}",
-        command: 'startGame',
         notifier: RoomsController.render(partial: 'rooms/playing_notifier', locals: { head: top_layout.char }),
         game_body: GamesController.render(partial: 'games/game', locals: { game: self }),
         player_body: PlayersController.render(partial: 'players/player', locals: { game: self, player: player })
     end
   end
 
-  def broadcast_gameover_status_to_players
-    ActionCable.server.broadcast "rooms:#{room_id}:messages",
-      command: 'exitGame',
-      notifier: RoomsController.render(partial: 'rooms/waiting_notifier'),
-      winner: winner
+  def broadcast_status_to_players
+    players.each do |player|
+      ActionCable.server.broadcast "rooms:#{room_id}:users:#{player.user_id}",
+        notifier: RoomsController.render(partial: 'rooms/playing_notifier', locals: { head: top_layout.char }),
+        game_body: GamesController.render(partial: 'games/game', locals: { game: self }),
+        player_hand: player.hands.select(%i(id char)).order(:id)
+    end
   end
 
   def enqueue_setup!
