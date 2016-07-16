@@ -10,6 +10,9 @@ $(document).on 'turbolinks:load', ->
   $('.room__player').on 'click', '.player__hand-selector--selected', ->
     false
 
+  $('.room__player').on 'click', '.player__reset', ->
+    false
+
   init = ->
     messagesArea = $('.messages')
     if messagesArea.length > 0
