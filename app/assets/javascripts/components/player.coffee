@@ -7,7 +7,7 @@ App.components.player = Vue.extend
   ready: ->
     @id = @$el.dataset.id
     @hands = JSON.parse(@$el.dataset.hands)
-    $(@$el).removeClass('player--preparing')
+    $(@$el).removeClass('player--hidden')
 
   methods:
     setHands: (handData) ->
