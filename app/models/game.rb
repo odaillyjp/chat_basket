@@ -89,7 +89,7 @@ class Game < ApplicationRecord
 
       # NOTE: プレイヤーに5枚のカードを配布
       players.each do |player|
-        hands = cards.shift(5).map { |card| Hand.new(orner: player, char: card) }
+        hands = cards.shift(5).map { |card| Hand.new(orner: player, char: card, game: self) }
         Hand.import(hands)
       end
 
