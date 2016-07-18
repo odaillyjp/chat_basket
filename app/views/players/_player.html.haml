@@ -1,4 +1,4 @@
-.player{ data: { id: player.id, hands: player.hands.select(%i(id char)).to_json } }
+.player.player--preparing{ data: { id: player.id, hands: player.hands.select(%i(id char)).to_json } }
   -# NOTE: Vue.js のデータバインディングを利用
   .player__hands
     %h2.player__hands-title あなたの手札
