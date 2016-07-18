@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714063647) do
+ActiveRecord::Schema.define(version: 20160718042057) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "attendances", force: :cascade do |t|
     t.integer  "room_id",    null: false
@@ -18,9 +21,9 @@ ActiveRecord::Schema.define(version: 20160714063647) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "status",     null: false
-    t.index ["room_id"], name: "index_attendances_on_room_id"
-    t.index ["status"], name: "index_attendances_on_status"
-    t.index ["user_id"], name: "index_attendances_on_user_id"
+    t.index ["room_id"], name: "index_attendances_on_room_id", using: :btree
+    t.index ["status"], name: "index_attendances_on_status", using: :btree
+    t.index ["user_id"], name: "index_attendances_on_user_id", using: :btree
   end
 
   create_table "games", force: :cascade do |t|
@@ -29,8 +32,8 @@ ActiveRecord::Schema.define(version: 20160714063647) do
     t.integer  "winner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["room_id"], name: "index_games_on_room_id"
-    t.index ["winner_id"], name: "index_games_on_winner_id"
+    t.index ["room_id"], name: "index_games_on_room_id", using: :btree
+    t.index ["winner_id"], name: "index_games_on_winner_id", using: :btree
   end
 
   create_table "hands", force: :cascade do |t|
@@ -38,7 +41,8 @@ ActiveRecord::Schema.define(version: 20160714063647) do
     t.string   "char",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["orner_id"], name: "index_hands_on_orner_id"
+    t.integer  "game_id",    null: false
+    t.index ["orner_id"], name: "index_hands_on_orner_id", using: :btree
   end
 
   create_table "layouts", force: :cascade do |t|
@@ -48,8 +52,8 @@ ActiveRecord::Schema.define(version: 20160714063647) do
     t.integer  "orner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_id"], name: "index_layouts_on_game_id"
-    t.index ["orner_id"], name: "index_layouts_on_orner_id"
+    t.index ["game_id"], name: "index_layouts_on_game_id", using: :btree
+    t.index ["orner_id"], name: "index_layouts_on_orner_id", using: :btree
   end
 
   create_table "messages", force: :cascade do |t|
@@ -58,8 +62,8 @@ ActiveRecord::Schema.define(version: 20160714063647) do
     t.integer  "room_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["room_id"], name: "index_messages_on_room_id"
-    t.index ["user_id"], name: "index_messages_on_user_id"
+    t.index ["room_id"], name: "index_messages_on_room_id", using: :btree
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
   create_table "players", force: :cascade do |t|
@@ -67,8 +71,8 @@ ActiveRecord::Schema.define(version: 20160714063647) do
     t.integer  "game_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["game_id"], name: "index_players_on_game_id"
-    t.index ["user_id"], name: "index_players_on_user_id"
+    t.index ["game_id"], name: "index_players_on_game_id", using: :btree
+    t.index ["user_id"], name: "index_players_on_user_id", using: :btree
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -76,7 +80,7 @@ ActiveRecord::Schema.define(version: 20160714063647) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "current_game_id"
-    t.index ["current_game_id"], name: "index_rooms_on_current_game_id"
+    t.index ["current_game_id"], name: "index_rooms_on_current_game_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -85,4 +89,12 @@ ActiveRecord::Schema.define(version: 20160714063647) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "attendances", "rooms"
+  add_foreign_key "attendances", "users"
+  add_foreign_key "games", "rooms"
+  add_foreign_key "layouts", "games"
+  add_foreign_key "messages", "rooms"
+  add_foreign_key "messages", "users"
+  add_foreign_key "players", "games"
+  add_foreign_key "players", "users"
 end
