@@ -13,13 +13,13 @@ gem 'jbuilder', '~> 2.0'
 
 gem 'activerecord-import'
 gem 'haml-rails'
+gem 'pg'
 gem 'redis'
 gem 'unf'
 
 group :development, :test do
   gem 'byebug'
   gem 'pry-rails'
-  gem 'sqlite3'
 end
 
 group :development do
@@ -30,7 +30,6 @@ group :development do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
 
