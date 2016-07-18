@@ -15,6 +15,7 @@ class Game < ApplicationRecord
   def broadcast_game_start_to_players
     players.each do |player|
       ActionCable.server.broadcast "rooms:#{room_id}:users:#{player.user_id}",
+        command: 'startGame',
         notifier: RoomsController.render(partial: 'rooms/playing_notifier', locals: { head: top_layout.char }),
         game_body: GamesController.render(partial: 'games/game', locals: { game: self }),
         player_body: PlayersController.render(partial: 'players/player', locals: { game: self, player: player })
