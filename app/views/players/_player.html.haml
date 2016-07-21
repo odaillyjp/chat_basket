@@ -6,3 +6,12 @@
       = link_to '{{ hand.char }}', '', class: 'player__hand-selector', data: { hand_id: '{{ hand.id }}', hand_char: '{{ hand.char }}' }
   .player__supports
     = link_to t('views.rooms.reset'), '', class: 'player__reset'
+  .player__reset-modal.player__reset-modal--hidden
+    .reset-modal
+      .reset-modal__content
+        %h2.reset-modal__hands-title 捨てる札を選択してください
+        %span.reset-modal__hand{ 'v-for': 'hand in hands' }
+          = link_to '{{ hand.char }}', '', class: 'reset-modal__hand-selector', data: { hand_id: '{{ hand.id }}', hand_char: '{{ hand.char }}' }
+        = form_tag 'players/reset', class: 'reset-modal__form', remote: true do
+          = submit_tag 'リセット'
+      .reset-modal__overlay

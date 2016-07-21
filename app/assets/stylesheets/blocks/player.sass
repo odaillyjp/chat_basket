@@ -13,3 +13,29 @@
 
   &__supports
     display: inline-block
+
+  &__reset-modal
+    &--hidden
+      display: none
+
+.reset-modal
+  &__overlay
+    background: rgba(255, 255, 255, 0.8)
+    position: fixed
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    z-index: 100
+
+  &__content
+    background: white
+    border: 1px solid
+    position: fixed
+    top: 50%
+    left: 50%
+    margin-top: -150px
+    margin-left: -250px
+    width: 500px
+    height: 300px
+    z-index: 200
