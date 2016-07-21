@@ -12,6 +12,6 @@
         %h2.reset-modal__hands-title 捨てる札を選択してください
         %span.reset-modal__hand{ 'v-for': 'hand in hands' }
           = link_to '{{ hand.char }}', '', class: 'reset-modal__hand-selector', data: { hand_id: '{{ hand.id }}', hand_char: '{{ hand.char }}' }
-        = form_tag 'players/reset', class: 'reset-modal__form', remote: true do
+        = form_tag "/players/#{player.id}/reset", class: 'reset-modal__form', remote: true do
           = submit_tag 'リセット'
       .reset-modal__overlay

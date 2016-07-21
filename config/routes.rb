@@ -11,8 +11,10 @@ Rails.application.routes.draw do
     post :messages, to: 'hands#play', constraints: ->(r) { r.params.dig(:message, :selected_hand_id).present? }, as: 'play_hand'
     post :messages, to: 'messages#create'
 
-    resources :games,    only: %i(create)
+    resources :games, only: %i(create)
   end
+
+  post 'players/:id/reset', to: 'players#reset'
 
   root 'rooms#index'
 end

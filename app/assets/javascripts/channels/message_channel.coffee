@@ -2,11 +2,13 @@ App.channels ||= {}
 App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
   connected: ->
     @install()
+    @resetInstall()
     @followCurrentRoom()
 
   install: ->
     $(document).on 'turbolinks:load', =>
       @followCurrentRoom()
+      @resetInstall()
 
   received: (data) ->
     @changeGameBody(data['game_body'])           if data['game_body']
@@ -31,6 +33,11 @@ App.channels.messages = App.cable.subscriptions.create "MessagesChannel",
       @showAlertMessage(data['alertMessage'])
     else if data['notifier']
       @changeNotifier(data['notifier'])
+
+  resetInstall: ->
+    $('.room__player').on 'ajax:success', '.reset-modal__form', (e, data, status, xhr) =>
+      $('.player__reset-modal').addClass('player__reset-modal--hidden')
+      @bindCurrentPlayerHands(data)
 
   followCurrentRoom: ->
     if roomId = $('.room').data('room-id')
