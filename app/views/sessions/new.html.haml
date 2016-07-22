@@ -1,4 +1,27 @@
-= form_tag sessions_path do
-  = label_tag :user_name, 'ユーザー名: '
-  = text_field_tag :user_name
-  = submit_tag 'ログイン'
+%header.index__header
+  .index__header-inner
+    %h1.index__header-title Chat Basket
+
+.index__container
+  .index__information
+    .index__information-inner
+      .index__information-title
+        Chat Basket
+      .index__information-description
+        『ワードバスケット』が遊べるチャット。
+
+  = form_tag sessions_path, class: 'index__login-form' do
+    = label_tag :user_name, 'あなたのお名前'
+    = text_field_tag :user_name, '', class: 'index__user-name-field'
+    = submit_tag 'チャットに入る', class: 'index__login-submit'
+
+%footer.index_footer
+  .footer__inner
+    .footer__brand
+      %h1.footer__title-area
+        Chat Basket
+    %p.footer__about
+      Chat Basket は、『ワードバスケット』が遊べるチャットサービスです。
+      ソースコードは<a target="_blank" href="" style="color: #ec7b00;">こちら</a>で公開されています。
+    %p.footer__copyright
+      Maintained by <a target="_blank" href="https://twitter.com/odailly_jp" style="color: #ec7b00;">odailly_jp</a>. © 2016 All rights reserved.
